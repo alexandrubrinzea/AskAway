@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Lista categorii";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<h1>@ViewBag.message</h1>
+
+@foreach (AskAway.Models.Category category in ViewBag.Categories)
+{
+    <p>@category.CategoryName</p>
+    <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
+    <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
+    <br />
+    <hr />
+    <br />
+}
+<br />
+<a class="btn btn-info" href="/Category/New">Adauga o noua categorie</a>
+<a class="btn btn-primary" href="/Article/Index">Articole</a>
+
+<br />
