@@ -23,7 +23,6 @@ namespace AskAway.Models
 
         [Required(ErrorMessage = "Categoria este obligatorie")]
         public int CategoryId { get; set; }
-
         public virtual Category Category { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
 

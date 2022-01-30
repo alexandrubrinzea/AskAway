@@ -249,6 +249,10 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\New.cshtml" />
     <Content Include="Views\Category\Show.cshtml" />
+    <Content Include="Views\Topic\New.cshtml" />
+    <Content Include="Views\Topic\Edit.cshtml" />
+    <Content Include="Views\Topic\Index.cshtml" />
+    <Content Include="Views\Topic\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Reply\" />

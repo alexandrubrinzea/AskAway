@@ -1,0 +1,34 @@
+﻿@model AskAway.Models.Topic
+
+@{
+    ViewBag.Title = "Subiecte de discutie";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<h1>@ViewBag.message</h1>
+
+@foreach (AskAway.Models.Topic topic in ViewBag.Topics)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading article-heading">
+            <span class="font-roboto article-title">@topic.Title</span>
+        </div>
+        <div class="">
+            <span class="">
+                <i class="glyphicon glyphicon-time"></i> @topic.Date
+            </span>
+            <div>
+                <i class="glyphicon glyphicon-bookmark"></i> @topic.Category.CategoryName
+            </div>
+            <div>
+                <i class="glyphicon glyphicon-user"></i> <strong> @topic.User.UserName </strong>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-sm btn-success"
+               href="/Topic/Show/@topic.Id">Afisare subiect</a>
+        </div>
+    </div>
+}

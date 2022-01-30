@@ -5,7 +5,43 @@
 <h2>@ViewBag.Title</h2>
 <hr />
 
-<h1>@ViewBag.message</h1>
+@if (@ViewBag.succesMessage != null)
+{
+    <!-- Success Alert -->
+    <div class="alert alert-success">
+        @ViewBag.succesMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.errorMessage != null)
+{
+    <!-- Error Alert -->
+    <div class="alert alert-danger">
+        @ViewBag.errorMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.warningMessage != null)
+{
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        @ViewBag.warningMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.infoMessage != null)
+{
+    <!-- Info Alert -->
+    <div class="alert alert-info">
+        @ViewBag.infoMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+
 
 @foreach (AskAway.Models.Category category in ViewBag.Categories)
 {

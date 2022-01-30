@@ -1,0 +1,31 @@
+﻿@model AskAway.Models.Topic
+
+@{
+    ViewBag.Titlu = "Adaugare subiect de discutie";
+}
+
+<h2>@ViewBag.Titlu</h2>
+<br />
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Topic"))
+{
+
+    @Html.HiddenFor(m => m.UserId)
+    
+    @Html.Label("Title", "Titlu Subiect")
+    <br />
+    
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <br />
+    
+    @Html.Hidden("Date", DateTime.Now, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger " })
+
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Value", "Text"), "Selectati categoria", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger " })
+    <br />
+
+    <button class="btn btn success" type="submit">Adauga subiect</button>
+}
