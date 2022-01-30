@@ -1,0 +1,43 @@
+﻿@model AskAway.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Afisare utilizator";
+}
+
+<ol class="breadcrumb">
+    <li><h3>@ViewBag.Title</h3></li>
+</ol>
+
+
+@Html.HiddenFor(m => m.Id)
+<br />
+<i class="glyphicon glyphicon-user"></i>
+@Html.Label("UserName", "Nume utilizator", new { @class = "" })
+@Html.DisplayTextFor(m => m.UserName)
+<br /><br />
+
+<i class="glyphicon glyphicon-envelope"></i>
+@Html.Label("Email", "Email utilizator", new { @class = "" })
+@Model.Email
+<br /><br />
+
+@if (Model.PhoneNumber != null)
+{
+    <i class="glyphicon glyphicon-phone"></i>
+    @Html.Label("PhoneNumber", "Numar telefon")
+    @Html.DisplayTextFor(m => m.PhoneNumber)
+    <br /><br />
+}
+
+@Html.Label("UserRole", "Rol")
+@ViewBag.roleName
+<br />
+<br />
+<div class="panel-footer">
+    <a class="btn btn-sm btn-success" href="/Users/Edit/@Model.Id"> Editare utilizator</a>
+</div>
+
+<br />
+<hr />
+<br />
+
