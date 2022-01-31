@@ -17,6 +17,7 @@ namespace AskAway.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = ApplicationDbContext.Create();
 
         public AccountController()
         {
@@ -75,7 +76,12 @@ namespace AskAway.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            // string userName = ApplicationDbContext. User.Where(m => m.Email == model.Email).Select(m => m.UserName).SingleOrDefault();
+            var userName = db.Users
+                            .Where(m => m.Email == model.Email)
+                            .Select(m => m.UserName)
+                            .SingleOrDefault();
+            var result = await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,7 +157,7 @@ namespace AskAway.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -9,12 +9,13 @@ using System.Web.Mvc;
 
 namespace AskAway.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "User,Moderator,Administrator")]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = ApplicationDbContext.Create();
 
         // GET: Users
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index()
         {
             var users = from user in db.Users
@@ -25,8 +26,15 @@ namespace AskAway.Controllers
             return View();
         }
 
+        [Authorize(Roles = "User,Moderator,Administrator")]
         public ActionResult Edit(string id)
         {
+            if (id != User.Identity.GetUserId() && !User.IsInRole("Administrator"))
+            {
+                TempData["errorMessage"] = "Nu aveti acces la aceasta pagina!";
+                return RedirectToAction("Index");
+            }
+
             ApplicationUser user = db.Users.Find(id);
             user.AllRoles = GetAllRoles();
             var userRole = user.Roles.FirstOrDefault();
@@ -35,8 +43,15 @@ namespace AskAway.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "User,Moderator,Administrator")]
         public ActionResult Edit(string id, ApplicationUser newData)
         {
+            if (id != User.Identity.GetUserId() && !User.IsInRole("Administrator"))
+            {
+                TempData["errorMessage"] = "Nu aveti dreptul sa modificati aceste date!";
+                return RedirectToAction("Index");
+            }
+
             ApplicationUser user = db.Users.Find(id);
             user.AllRoles = GetAllRoles();
             var userRole = user.Roles.FirstOrDefault();
@@ -69,6 +84,7 @@ namespace AskAway.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Show(string id)
         {
             ApplicationUser user = db.Users.Find(id);
