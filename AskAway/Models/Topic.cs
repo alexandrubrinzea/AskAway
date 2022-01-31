@@ -26,7 +26,7 @@ namespace AskAway.Models
         public virtual Category Category { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
 
-        public virtual ICollection<Reply> Reply { get; set; }
+        public virtual ICollection<Reply> Replies { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }

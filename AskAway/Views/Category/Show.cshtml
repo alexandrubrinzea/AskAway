@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Titlu</h2>
 
-<p>@Model.CategoryName</p>
+<p>@Model.CategoryId</p>
 
 <form method="post" action="/Category/Delete/@Model.CategoryId">
     @Html.HttpMethodOverride(HttpVerbs.Delete)

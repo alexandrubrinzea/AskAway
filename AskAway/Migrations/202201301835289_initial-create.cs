@@ -1,4 +1,4 @@
-namespace ForumApp.Migrations
+namespace AskAway.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

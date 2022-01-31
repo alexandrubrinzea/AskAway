@@ -38,11 +38,17 @@ namespace AskAway.Controllers
             return View();
         }
 
-        public ActionResult Show(int id)
+        public ActionResult Show(int id = 0)
         {
-            Topic topic = db.Topics.Find(id);
+            if (id > 0)
+            {
+                Topic topic = db.Topics.Find(id);
 
-            return View(topic);
+                return View(topic);
+            }
+            return RedirectToAction("Index");
+
+
         }
 
         [Authorize(Roles = "User,Moderator,Administrator")]

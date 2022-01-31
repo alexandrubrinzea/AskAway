@@ -42,15 +42,31 @@
 }
 
 
+@{
+    var topics = ViewBag.Topics as List<AskAway.Models.Topic>;
+}
 
 @foreach (AskAway.Models.Category category in ViewBag.Categories)
 {
-    <p>@category.CategoryName</p>
-    <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
-    <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
-    <br />
-    <hr />
-    <br />
+    <div class="CategoryStyle">
+        <p>@category.CategoryName</p>
+        if (topics != null)
+        {
+        @foreach (AskAway.Models.Topic topic in topics)
+        {
+            if (topic.CategoryId == category.CategoryId)
+            {
+                <p class="TopicStyle"> topic.Title</p>
+            }
+        }
+        }
+        <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
+        <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
+        <br />
+        <hr />
+        <br />
+
+    </div>
 }
 <br />
 <a class="btn btn-info" href="/Category/New">Adauga o noua categorie</a>
