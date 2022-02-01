@@ -6,18 +6,19 @@
 
 <h2>@ViewBag.Titlu</h2>
 
-<p>@Model.CategoryId</p>
+<p>@Model.CategoryName</p>
 
-<form method="post" action="/Category/Delete/@Model.CategoryId">
+@if (this.User.IsInRole("Administrator"))
+{
+    <form method="post" action="/Category/Delete/@Model.CategoryId">
     @Html.HttpMethodOverride(HttpVerbs.Delete)
-
     <button class="btn btn-danger" type="submit">Sterge categoria</button>
+    </form>
+}
+    <br />
+    <a class="btn btn-success" href="/Category/Index/">Inapoi la lista de categorii</a>
 
-</form>
-<br />
-<a class="btn btn-success" href="/Category/Index/">Afisare lista categorii</a>
-
-<br />
-<hr />
-<br />
+    <br />
+    <hr />
+    <br />
 

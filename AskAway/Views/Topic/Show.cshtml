@@ -1,20 +1,18 @@
 ﻿@model AskAway.Models.Topic
 
 @{
-    ViewBag.Titlu = Model.Title; // De gasit metoda de a scoate numele categoriei
+    ViewBag.Categorie = Model.Category;
+    ViewBag.Titlu = Model.Title;
 }
+
 
 <h2>@ViewBag.Titlu</h2>
 
-<p>@ViewBag.CategoryId</p>
+<p>@ViewBag.Category</p>
 
+<a class="btn btn-success" href="/Reply/New/@Model.Id">Add reply</a>
 
-@foreach (AskAway.Models.Reply reply in Model.Replies)
+@foreach (ForumApp.Models.Reply reply in Model.Replies)
 {
-    <p> reply.Content </p>
-    <p>> reply.Date </p>
-    <p> reply.User.UserName</p>
+    @Html.Partial("ReplyView", reply)
 }
-
-<a class="btn btn-success" href="/Reply/New">Add reply</a>
-

@@ -54,7 +54,7 @@ namespace AskAway.Controllers
 
         [HttpPost]
         [Authorize(Roles = "User,Moderator,Administrator")]
-        public ActionResult New(Reply reply)
+        public ActionResult New(Reply reply, int id)
         {
 
             try
@@ -66,7 +66,7 @@ namespace AskAway.Controllers
 
                     TempData["succesMessage"] = "Raspunsul a fost adaugat cu succes!";
 
-                    return RedirectToAction("Topic/Index");
+                    return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
                 }
             }
             catch (Exception e)
@@ -115,14 +115,14 @@ namespace AskAway.Controllers
 
                             db.SaveChanges();
                             TempData["succesMessage"] = "Raspunsul a fost modificat!";
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index", "Topic", new { id = requestReply.TopicId });
                         }
 
                     }
                     else
                     {
                         TempData["errorMessage"] = "Nu aveti dreptul sa faceti modificari asupra unui raspuns care nu va apartine!";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Topic", new { id = requestReply.TopicId });
                     }
 
                 }
@@ -145,7 +145,7 @@ namespace AskAway.Controllers
 
             TempData["succesMessage"] = "Raspunsul a fost sters!";
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Topic", new { id = reply.TopicId });
         }
     }
 }

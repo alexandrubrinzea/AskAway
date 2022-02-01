@@ -48,26 +48,32 @@
 
 @foreach (AskAway.Models.Category category in ViewBag.Categories)
 {
-<div class="CategoryStyle">
-    <p>@category.CategoryName</p>
-    @foreach (AskAway.Models.Topic topic in ViewBag.Topics)
-    {
-        if (topic.CategoryId == category.CategoryId)
+    <div class="CategoryStyle">
+        <p>@category.CategoryName</p>
+        @foreach (AskAway.Models.Topic topic in ViewBag.Topics)
         {
-            <p class="TopicStyle"> @topic.Title</p>
+            if (topic.CategoryId == category.CategoryId)
+            {
+                <div href="/Topic/Show/@topic.Id">
+                    <p class="TopicStyle"> @topic.Title</p>
+                </div>
+            }
         }
-    }
 
-    <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
-    <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
-    <br />
-    <hr />
-    <br />
-
-</div>
+        <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
+        @if (this.User.IsInRole("Administrator"))
+        {
+            <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
         }
         <br />
-        <a class="btn btn-info" href="/Category/New">Adauga o noua categorie</a>
-        <a class="btn btn-primary" href="/Topic/Index">Articole</a>
-
+        <hr />
         <br />
+
+    </div>
+}
+<br />
+@if (this.User.IsInRole("Administrator"))
+{
+    <a class="btn btn-info" href="/Category/New">Adauga o noua categorie</a>
+}
+<br />

@@ -6,14 +6,26 @@
 
 <h2>@ViewBag.Titlu</h2>
 
-<form method="post" action="/Reply/New">
+@using (Html.BeginForm(actionName: "New", controllerName: "Reply", routeValues: Model.TopicId))
+{
 
-    @Html.Label("Content", "Continut")
+    @Html.HiddenFor(m => m.UserId)
+
+
+    <br />
+
+    @Html.Label("Content", "Continut raspuns")
     <br />
 
     @Html.TextBox("Content", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger " })
-    <br /><br />
+    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+    <br />
 
-    <button class="btn btn-success" type="submit">Adauga raspuns</button>
-</form>
+    @Html.Hidden("Date", DateTime.Now, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger " })
+
+    @Html.HiddenFor(m => m.TopicId)
+
+
+    <button class="btn btn success" type="submit">Adauga raspuns</button>
+}
