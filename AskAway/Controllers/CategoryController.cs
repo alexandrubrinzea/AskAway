@@ -16,9 +16,8 @@ namespace AskAway.Controllers
         {
             var categories = db.Categories;
             ViewBag.Categories = categories;
+            ViewBag.Topics = GetAllTopics();
 
-            var topics = db.Topics.Include("Category");
-            ViewBag.Topics = topics;
 
             if (TempData.ContainsKey("succesMessage"))
             {
@@ -43,6 +42,8 @@ namespace AskAway.Controllers
         public ActionResult Show(int id)
         {
             Category category = db.Categories.Find(id);
+            category.Topics = GetSpecificTopics(category.CategoryId);
+
 
             return View(category);
         }
@@ -125,6 +126,42 @@ namespace AskAway.Controllers
             TempData["succesMessage"] = "Categoria a fost stearsa!";
 
             return RedirectToAction("Index");
+        }
+
+
+        [NonAction]
+        public IEnumerable<Topic> GetAllTopics()
+        {
+            var topics = from topic in db.Topics
+                         select topic;
+
+            var topicList = new List<Topic>();
+
+            foreach (var topic in topics)
+            {
+                topicList.Add(topic);
+            }
+
+            return topicList;
+        }
+
+        [NonAction]
+        public IEnumerable<Topic> GetSpecificTopics(int CategoryId)
+        {
+            var topics = from topic in db.Topics
+                         select topic;
+
+            var topicList = new List<Topic>();
+
+            foreach (var topic in topics)
+            {
+                if (topic.CategoryId == CategoryId)
+                {
+                    topicList.Add(topic);
+                }
+            }
+
+            return topicList;
         }
     }
 }

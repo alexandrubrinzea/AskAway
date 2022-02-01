@@ -50,16 +50,14 @@
 {
 <div class="CategoryStyle">
     <p>@category.CategoryName</p>
-    @*if (topics != null)
-    {
-    @foreach (AskAway.Models.Topic topic in topics)
+    @foreach (AskAway.Models.Topic topic in ViewBag.Topics)
     {
         if (topic.CategoryId == category.CategoryId)
         {
-            <p class="TopicStyle"> topic.Title</p>
+            <p class="TopicStyle"> @topic.Title</p>
         }
     }
-    }*@
+
     <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
     <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
     <br />

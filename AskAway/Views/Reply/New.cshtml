@@ -1,0 +1,19 @@
+﻿@model AskAway.Models.Reply
+
+@{
+    ViewBag.Titlu = "Adaugare Raspuns";
+}
+
+<h2>@ViewBag.Titlu</h2>
+
+<form method="post" action="/Reply/New">
+
+    @Html.Label("Content", "Continut")
+    <br />
+
+    @Html.TextBox("Content", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger " })
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Adauga raspuns</button>
+</form>

@@ -66,7 +66,7 @@ namespace AskAway.Controllers
 
                     TempData["succesMessage"] = "Raspunsul a fost adaugat cu succes!";
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Topic/Index");
                 }
             }
             catch (Exception e)

@@ -34,7 +34,6 @@ namespace AskAway.Controllers
             {
                 ViewBag.infoMessage = TempData["infoMessage"].ToString();
             }
-
             return View();
         }
 
@@ -43,6 +42,7 @@ namespace AskAway.Controllers
             if (id > 0)
             {
                 Topic topic = db.Topics.Find(id);
+                topic.Replies = GetSpecificReplies(id);
 
                 return View(topic);
             }
@@ -85,7 +85,6 @@ namespace AskAway.Controllers
 
             }
             return View(topic);
-
         }
 
         [Authorize(Roles = "User,Moderator,Administrator")]
@@ -132,15 +131,13 @@ namespace AskAway.Controllers
                     {
                         TempData["errorMessage"] = "Nu aveti dreptul sa faceti modificari asupra unui subiect care nu va apartine!";
                         return RedirectToAction("Index");
-                    }
-                    
+                    }           
                 }
             }
             catch (Exception e)
             {
                 TempData["errorMessage"] = "A aparut o eroare la salvarea modificarii!";
             }
-
             return View(requestTopic);
         }
 
@@ -175,6 +172,35 @@ namespace AskAway.Controllers
             }
 
             return selectList;
+        }
+
+        [NonAction]
+        public IEnumerable<Reply> GetAllReplies()
+        {
+            var replies = from reply in db.Replies
+                          select reply;
+            var replyList = new List<Reply>();
+            foreach (var reply in replies)
+            {
+                replyList.Add(reply);
+            }
+            return replyList;
+        }
+
+        [NonAction]
+        public IEnumerable<Reply> GetSpecificReplies(int id)
+        {
+            var replies = from reply in db.Replies
+                          select reply;
+            var replyList = new List<Reply>();
+            foreach (var reply in replies)
+            {
+                if (id == reply.TopicId)
+                {
+                    replyList.Add(reply);
+                }
+            }
+            return replyList;
         }
     }
 }

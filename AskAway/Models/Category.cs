@@ -15,7 +15,7 @@ namespace AskAway.Models
         [Required(ErrorMessage = "Numele categoriei este obligatoriu")]
         public string CategoryName { get; set; }
 
-        public virtual ICollection<Topic> Topic { get; set; }
+        public IEnumerable<Topic> Topics { get; set; }
     }
 
 }

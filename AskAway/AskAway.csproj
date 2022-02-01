@@ -258,11 +258,10 @@
     <Content Include="Views\Topic\Edit.cshtml" />
     <Content Include="Views\Topic\Index.cshtml" />
     <Content Include="Views\Topic\Show.cshtml" />
+    <Content Include="Views\Reply\New.cshtml" />
+    <Content Include="Views\Shared\ReplyView.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Reply\" />
-    <Folder Include="Views\Topic\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
