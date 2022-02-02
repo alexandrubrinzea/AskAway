@@ -16,7 +16,7 @@ namespace AskAway.Controllers
         {
             var categories = db.Categories;
             ViewBag.Categories = categories;
-            ViewBag.Topics = GetAllTopics().Skip(0).Take(4);
+            ViewBag.Topics = GetAllTopics();
 
             if (TempData.ContainsKey("succesMessage"))
             {

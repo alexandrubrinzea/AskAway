@@ -51,17 +51,13 @@
     <div class="CategoryStyle">
         <p class="CategoryTitle">@category.CategoryName</p>
         <div>
-            @foreach (AskAway.Models.Topic topic in ViewBag.Topics)
-            {
-                if (topic.CategoryId == category.CategoryId)
+            @{  
+                foreach (AskAway.Models.Topic topic in topics.Where(t => t.CategoryId == category.CategoryId).Skip(0).Take(4))
                 {
-
                     <a class="TopicShow btn" href="/Topic/Show/@topic.Id">
                         @topic.Title
                         <i class="right"></i>
                     </a>
-
-
                 }
             }
         </div>

@@ -5,7 +5,15 @@
 }
 
 
-<h2 class="TopicTitle">@ViewBag.Titlu</h2>
+<h2 class="TopicTitle">
+    @ViewBag.Titlu
+    @if (Model.ClosedTopic)
+    {
+        <span class="btn btn-sm btn-danger">
+            <img src="\Content\locked.png" width="18" />
+        </span>
+    }
+</h2>
 
 
 
@@ -45,8 +53,10 @@
     </div>
 }
 
-
-<a class="btn AddReply" href="/Reply/New/@Model.Id">Add reply</a>
+@if (!Model.ClosedTopic)
+{
+    <a class="btn AddReply" href="/Reply/New/@Model.Id">Add reply</a>
+}
 
 @foreach (AskAway.Models.Reply reply in Model.Replies)
 {

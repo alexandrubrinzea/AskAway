@@ -40,13 +40,13 @@ namespace AskAway.Migrations
                         Content = c.String(nullable: false),
                         Date = c.DateTime(nullable: false),
                         UserId = c.String(maxLength: 128),
-                        Topic_Id = c.Int(),
+                        TopicId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .ForeignKey("dbo.Topics", t => t.Topic_Id)
+                .ForeignKey("dbo.Topics", t => t.TopicId)
                 .Index(t => t.UserId)
-                .Index(t => t.Topic_Id);
+                .Index(t => t.TopicId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -122,7 +122,7 @@ namespace AskAway.Migrations
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Topics", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Replies", "Topic_Id", "dbo.Topics");
+            DropForeignKey("dbo.Replies", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.Replies", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
@@ -134,7 +134,7 @@ namespace AskAway.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Replies", new[] { "Topic_Id" });
+            DropIndex("dbo.Replies", new[] { "TopicId" });
             DropIndex("dbo.Replies", new[] { "UserId" });
             DropIndex("dbo.Topics", new[] { "UserId" });
             DropIndex("dbo.Topics", new[] { "CategoryId" });

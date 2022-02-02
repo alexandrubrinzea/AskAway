@@ -79,6 +79,48 @@ namespace AskAway.Controllers
 
         }
 
+        [Authorize(Roles = "Moderator,Administrator")]
+        public ActionResult MarkAnswer(int id)
+        {
+            if (TempData.ContainsKey("succesMessage"))
+            {
+                ViewBag.succesMessage = TempData["succesMessage"].ToString();
+            }
+            if (TempData.ContainsKey("errorMessage"))
+            {
+                ViewBag.errorMessage = TempData["errorMessage"].ToString();
+            }
+            if (TempData.ContainsKey("warningMessage"))
+            {
+                ViewBag.warningMessage = TempData["warningMessage"].ToString();
+            }
+            if (TempData.ContainsKey("infoMessage"))
+            {
+                ViewBag.infoMessage = TempData["infoMessage"].ToString();
+            }
+
+            Reply reply = db.Replies.Find(id);
+            
+            if (reply == null)
+            {
+                TempData["errorMessage"] = "A aparut o eroare!";
+                return RedirectToAction("Index");
+            }
+
+            var otherCorrectAnswers = db.Replies.Where(r => r.TopicId == reply.TopicId && r.CorrectAnswer );
+
+            if (otherCorrectAnswers.Count() > 0)
+            {
+                TempData["warningMessage"] = "Exista deja un raspuns marcat drept corect.";
+            }
+            else
+            {
+                reply.CorrectAnswer = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
+        }
+
         [Authorize(Roles = "User,Moderator,Administrator")]
         public ActionResult Edit(int id)
         {

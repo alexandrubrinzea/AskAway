@@ -20,6 +20,8 @@ namespace AskAway.Models
         [DataType(DataType.DateTime, ErrorMessage = "Data este obligatorie")]
         public DateTime Date { get; set; }
 
+        public bool CorrectAnswer { get; set; }
+
         public int TopicId { get; set; }
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }

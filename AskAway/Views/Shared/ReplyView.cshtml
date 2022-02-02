@@ -5,6 +5,12 @@
     <dl class="dl-horizontal">
         <div class="ReplyContent">
             @Html.DisplayFor(model => model.Content)
+            @if (Model.CorrectAnswer)
+            {
+                <span class="">
+                    <i class="glyphicon glyphicon-ok success"></i>
+                </span>
+            }
         </div>
 
         <div class="ReplyInfo">
@@ -19,10 +25,19 @@
 @if ((this.User.Identity.Name.Equals(Model.User.UserName)) || this.User.IsInRole("Moderator") || this.User.IsInRole("Administrator"))
 {
     <div class="BtnDiv">
-        <form method="post" action="/Reply/Delete/@Model.Id">
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <button class="ReplyBtn btn-danger" type="submit">Sterge raspuns</button>
-        </form>
+        @if (!Model.CorrectAnswer)
+        {
+            <form method="post" action="/Reply/Delete/@Model.Id">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="ReplyBtn btn-danger" type="submit">Sterge raspuns</button>
+            </form>
+        }
+        
         <a class="ReplyBtn btn-success" href="/Reply/Edit/@Model.Id">Editare raspuns</a>
+        @if (this.User.IsInRole("Moderator") || this.User.IsInRole("Administrator") && !Model.CorrectAnswer)
+        {
+            <a class="ReplyBtn btn-primary" href="/Reply/MarkAnswer/@Model.Id">Marcheaza corect</a>
+        }
+        
     </div>
 }

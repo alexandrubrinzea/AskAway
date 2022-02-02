@@ -180,6 +180,10 @@
     <Compile Include="Migrations\202201301835289_initial-create.designer.cs">
       <DependentUpon>202201301835289_initial-create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202021220176_Marking-of-Questions-and-Answers.cs" />
+    <Compile Include="Migrations\202202021220176_Marking-of-Questions-and-Answers.Designer.cs">
+      <DependentUpon>202202021220176_Marking-of-Questions-and-Answers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -199,6 +203,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\locked.png" />
+    <Content Include="Content\unlocked.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -265,6 +271,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202201301835289_initial-create.resx">
       <DependentUpon>202201301835289_initial-create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202021220176_Marking-of-Questions-and-Answers.resx">
+      <DependentUpon>202202021220176_Marking-of-Questions-and-Answers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

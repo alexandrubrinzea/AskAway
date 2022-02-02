@@ -61,6 +61,36 @@ namespace AskAway.Controllers
             return View(topic);
         }
 
+        [Authorize(Roles = "Moderator,Administrator")]
+        public ActionResult Lock(int id)
+        {
+            if (TempData.ContainsKey("succesMessage"))
+            {
+                ViewBag.succesMessage = TempData["succesMessage"].ToString();
+            }
+            if (TempData.ContainsKey("errorMessage"))
+            {
+                ViewBag.errorMessage = TempData["errorMessage"].ToString();
+            }
+            if (TempData.ContainsKey("warningMessage"))
+            {
+                ViewBag.warningMessage = TempData["warningMessage"].ToString();
+            }
+            if (TempData.ContainsKey("infoMessage"))
+            {
+                ViewBag.infoMessage = TempData["infoMessage"].ToString();
+            }
+
+            Topic topic = db.Topics.Find(id);
+            if (topic != null)
+            {
+                topic.ClosedTopic = true;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [Authorize(Roles = "User,Moderator,Administrator")]
         public ActionResult New()
         {

@@ -21,6 +21,8 @@ namespace AskAway.Models
         [DataType(DataType.DateTime, ErrorMessage = "Data este obligatorie")]
         public DateTime Date { get; set; }
 
+        public bool ClosedTopic { get; set; }
+
         [Required(ErrorMessage = "Categoria este obligatorie")]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
