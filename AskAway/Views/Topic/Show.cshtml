@@ -1,18 +1,54 @@
 ﻿@model AskAway.Models.Topic
 
 @{
-    ViewBag.Categorie = Model.Category;
     ViewBag.Titlu = Model.Title;
 }
 
 
-<h2>@ViewBag.Titlu</h2>
+<h2 class="TopicTitle">@ViewBag.Titlu</h2>
 
-<p>@ViewBag.Category</p>
 
-<a class="btn btn-success" href="/Reply/New/@Model.Id">Add reply</a>
 
-@foreach (ForumApp.Models.Reply reply in Model.Replies)
+@if (@ViewBag.succesMessage != null)
+{
+    <!-- Success Alert -->
+    <div class="alert alert-success">
+        @ViewBag.succesMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.errorMessage != null)
+{
+    <!-- Error Alert -->
+    <div class="alert alert-danger">
+        @ViewBag.errorMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.warningMessage != null)
+{
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        @ViewBag.warningMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+@if (@ViewBag.infoMessage != null)
+{
+    <!-- Info Alert -->
+    <div class="alert alert-info">
+        @ViewBag.infoMessage
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+}
+
+
+<a class="btn AddReply" href="/Reply/New/@Model.Id">Add reply</a>
+
+@foreach (AskAway.Models.Reply reply in Model.Replies)
 {
     @Html.Partial("ReplyView", reply)
 }

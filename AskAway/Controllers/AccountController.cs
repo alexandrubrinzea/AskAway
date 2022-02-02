@@ -67,7 +67,7 @@ namespace AskAway.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl="/Category/Index")
         {
             if (!ModelState.IsValid)
             {
@@ -76,12 +76,15 @@ namespace AskAway.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            // string userName = ApplicationDbContext. User.Where(m => m.Email == model.Email).Select(m => m.UserName).SingleOrDefault();
+
             var userName = db.Users
                             .Where(m => m.Email == model.Email)
                             .Select(m => m.UserName)
                             .SingleOrDefault();
+            if (userName == null)
+                userName = model.Email;
             var result = await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:

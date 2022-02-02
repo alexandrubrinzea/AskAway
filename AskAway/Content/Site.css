@@ -28,11 +28,117 @@ textarea {
 }
 
 .CategoryStyle {
-    margin-bottom: 15px;
-    border-bottom: 0 px solid red;
+    margin-bottom: -15px;
 }
 
 .TopicStyle {
     font-size: large;
+    text-align: left;
+    margin-left: 30px;
+    font-size: 16px;
+}
+
+.ReplyContent {
+    width: 70%;
+    height: auto;
+    padding-right: 10px;
+    text-align: left;
+    float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: bold;
+    line-height: 1.42857143;
+    word-wrap: break-word;
+}
+
+.ReplyInfo{
+    width: 30%;
+    height: auto;
+    text-align: right;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    float:right;
+    clear: both;
+}
+
+.ReplyBtn{
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
     text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    line-height: 1.42857143;
+    margin-right: 5px;
+    float: left;
+}
+
+.BtnDiv{
+    width: 35%;
+    display: inline-block;
+    
+
+}
+
+.AddReply{
+    color: antiquewhite;
+    background-color: deepskyblue;
+    border-color: cadetblue;
+}
+
+.TopicTitle{
+    font-size: 40px;
+    text-transform: uppercase;
+}
+
+.CategoryTitle{
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.TopicShow{
+    color: black;
+    background-color:lightsteelblue;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.Reply{
+    height: 100px;
+}
+
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
 }

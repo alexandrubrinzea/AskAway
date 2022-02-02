@@ -1,29 +1,28 @@
 ﻿@model AskAway.Models.Reply
 
-<div>
+<div class="Reply">
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <div class="ReplyContent">
             @Html.DisplayFor(model => model.Content)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dd>
+        <div class="ReplyInfo">
             @Html.DisplayFor(model => model.User.UserName)
-        </dd>
+        </div>
+
+        <div class="ReplyInfo">
+            @Html.DisplayFor(model => model.Date)
+        </div>
     </dl>
 </div>
-
 @if ((this.User.Identity.Name.Equals(Model.User.UserName)) || this.User.IsInRole("Moderator") || this.User.IsInRole("Administrator"))
 {
-
-    <form method="post" action="/Reply/Delete/@Model.Id">
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <button class="btn btn-danger" type="submit">Sterge raspuns</button>
-    </form>
-    <a class="btn btn-success" href="/Reply/Edit/@Model.Id">Editare raspuns</a>
-
+    <div class="BtnDiv">
+        <form method="post" action="/Reply/Delete/@Model.Id">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="ReplyBtn btn-danger" type="submit">Sterge raspuns</button>
+        </form>
+        <a class="ReplyBtn btn-success" href="/Reply/Edit/@Model.Id">Editare raspuns</a>
+    </div>
 }

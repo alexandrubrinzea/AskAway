@@ -16,8 +16,7 @@ namespace AskAway.Controllers
         {
             var categories = db.Categories;
             ViewBag.Categories = categories;
-            ViewBag.Topics = GetAllTopics();
-
+            ViewBag.Topics = GetAllTopics().Skip(0).Take(4);
 
             if (TempData.ContainsKey("succesMessage"))
             {
@@ -39,11 +38,26 @@ namespace AskAway.Controllers
             return View();
         }
 
-        public ActionResult Show(int id)
+        public ActionResult Show(int id, string sort = "Date", string sortDir = "descending", string search = "%")
         {
-            Category category = db.Categories.Find(id);
-            category.Topics = GetSpecificTopics(category.CategoryId);
+            int page = 1;
+            int pageSize = 3;
+            int totalRecord = 0;
+            Int32.TryParse(Request.Params.Get("page"), out page);
+            if (page < 1)
+                page = 1;
+            
+            
 
+            int skip = (page * pageSize) - pageSize;
+
+            Category category = db.Categories.Find(id);
+            category.Topics = GetTopics(category.CategoryId, search, sort, sortDir, skip, pageSize, out totalRecord);
+
+            ViewBag.TotalRows = totalRecord;
+            ViewBag.search = search.Replace("%", "");
+            ViewBag.lastPage = Math.Ceiling((float)totalRecord / (float)pageSize);
+            ViewBag.page = page;
 
             return View(category);
         }
@@ -128,6 +142,55 @@ namespace AskAway.Controllers
             return RedirectToAction("Index");
         }
 
+        [NonAction]
+        public IEnumerable<Topic> GetTopics(int categoryId, string search, string sort, string sortDir, int skip, int pageSize, out int totalRecord)
+        {
+            var topics = (from topic in db.Topics
+                          //join reply in db.Replies on topic.Id equals reply.TopicId
+                          where (
+                          topic.CategoryId == categoryId &&
+                          (   topic.Title.ToLower().Contains(search.ToLower()) ||
+                              topic.Category.CategoryName.ToLower().Contains(search.ToLower()) ||
+                              //reply.Content.ToLower().Contains(search.ToLower()) || 
+                              search.ToLower().Equals("%")  )
+                          )
+                          select topic);
+
+            topics = topics.Distinct();
+            totalRecord = topics.Count();
+
+            if (!sortDir.Equals("") && !sort.Equals(""))
+            {
+                if (sortDir.ToLower().Equals("ascending"))
+                {
+                    if (sort.ToLower().Equals("date"))
+                        topics = topics.OrderBy(o => o.Date);
+                    else
+                        topics = topics.OrderBy(o => o.Title);
+                }
+                else
+                {
+                    if (sort.ToLower().Equals("date"))
+                        topics = topics.OrderByDescending(o => o.Date);
+                    else
+                        topics = topics.OrderByDescending(o => o.Title);
+                }
+            }
+
+            if (pageSize > 0)
+            {
+                topics = topics.Skip(skip).Take(pageSize);
+            }
+
+            var topicList = new List<Topic>();
+
+            foreach (var topic in topics)
+            {
+                topicList.Add(topic);
+            }
+
+            return topicList;
+        }
 
         [NonAction]
         public IEnumerable<Topic> GetAllTopics()
@@ -149,7 +212,7 @@ namespace AskAway.Controllers
         public IEnumerable<Topic> GetSpecificTopics(int CategoryId)
         {
             var topics = from topic in db.Topics
-                         select topic;
+                             select topic;
 
             var topicList = new List<Topic>();
 

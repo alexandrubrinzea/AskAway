@@ -177,7 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202201301835289_initial-create.cs" />
-    <Compile Include="Migrations\202201301835289_initial-create.Designer.cs">
+    <Compile Include="Migrations\202201301835289_initial-create.designer.cs">
       <DependentUpon>202201301835289_initial-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
@@ -259,9 +259,14 @@
     <Content Include="Views\Topic\Index.cshtml" />
     <Content Include="Views\Topic\Show.cshtml" />
     <Content Include="Views\Reply\New.cshtml" />
+    <Content Include="Views\Reply\Edit.cshtml" />
     <Content Include="Views\Shared\ReplyView.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202201301835289_initial-create.resx">
+      <DependentUpon>202201301835289_initial-create.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -274,11 +279,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201301835289_initial-create.resx">
-      <DependentUpon>202201301835289_initial-create.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -296,9 +296,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50792</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50792/</IISUrl>
+          <IISUrl>http://localhost:53479/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

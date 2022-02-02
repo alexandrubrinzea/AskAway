@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Routing;
 using System.Web.Mvc;
 using AskAway.Models;
 using Microsoft.AspNet.Identity;
@@ -61,12 +61,13 @@ namespace AskAway.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    reply.TopicId = id;
                     db.Replies.Add(reply);
                     db.SaveChanges();
 
                     TempData["succesMessage"] = "Raspunsul a fost adaugat cu succes!";
 
-                    return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
+                    return RedirectToAction("Show","Topic", new { id = reply.TopicId });
                 }
             }
             catch (Exception e)
@@ -88,7 +89,7 @@ namespace AskAway.Controllers
             if (reply.UserId != User.Identity.GetUserId() && (!User.IsInRole("Administrator") || !User.IsInRole("Moderator")))
             {
                 TempData["errorMessage"] = "Nu aveti dreptul sa faceti modificari asupra unui raspuns care nu va apartine!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
             }
 
             return View(reply);
@@ -115,14 +116,14 @@ namespace AskAway.Controllers
 
                             db.SaveChanges();
                             TempData["succesMessage"] = "Raspunsul a fost modificat!";
-                            return RedirectToAction("Index", "Topic", new { id = requestReply.TopicId });
+                            return RedirectToAction("Show","Topic", new { id = reply.TopicId });
                         }
 
                     }
                     else
                     {
                         TempData["errorMessage"] = "Nu aveti dreptul sa faceti modificari asupra unui raspuns care nu va apartine!";
-                        return RedirectToAction("Index", "Topic", new { id = requestReply.TopicId });
+                        return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
                     }
 
                 }
@@ -145,7 +146,7 @@ namespace AskAway.Controllers
 
             TempData["succesMessage"] = "Raspunsul a fost sters!";
 
-            return RedirectToAction("Index", "Topic", new { id = reply.TopicId });
+            return RedirectToAction("Show", "Topic", new { id = reply.TopicId });
         }
     }
 }

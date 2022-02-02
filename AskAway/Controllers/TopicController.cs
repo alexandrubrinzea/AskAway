@@ -37,18 +37,28 @@ namespace AskAway.Controllers
             return View();
         }
 
-        public ActionResult Show(int id = 0)
+        public ActionResult Show(int id)
         {
-            if (id > 0)
+            if (TempData.ContainsKey("succesMessage"))
             {
-                Topic topic = db.Topics.Find(id);
-                topic.Replies = GetSpecificReplies(id);
-
-                return View(topic);
+                ViewBag.succesMessage = TempData["succesMessage"].ToString();
             }
-            return RedirectToAction("Index");
+            if (TempData.ContainsKey("errorMessage"))
+            {
+                ViewBag.errorMessage = TempData["errorMessage"].ToString();
+            }
+            if (TempData.ContainsKey("warningMessage"))
+            {
+                ViewBag.warningMessage = TempData["warningMessage"].ToString();
+            }
+            if (TempData.ContainsKey("infoMessage"))
+            {
+                ViewBag.infoMessage = TempData["infoMessage"].ToString();
+            }
 
-
+            Topic topic = db.Topics.Find(id);
+            topic.Replies = GetSpecificReplies(id);
+            return View(topic);
         }
 
         [Authorize(Roles = "User,Moderator,Administrator")]
@@ -138,6 +148,7 @@ namespace AskAway.Controllers
             {
                 TempData["errorMessage"] = "A aparut o eroare la salvarea modificarii!";
             }
+
             return View(requestTopic);
         }
 
@@ -193,6 +204,10 @@ namespace AskAway.Controllers
             var replies = from reply in db.Replies
                           select reply;
             var replyList = new List<Reply>();
+            
+            if (replies == null || replies.Count() == 0)
+                return replyList;
+
             foreach (var reply in replies)
             {
                 if (id == reply.TopicId)

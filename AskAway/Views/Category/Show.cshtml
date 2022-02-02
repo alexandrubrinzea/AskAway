@@ -1,24 +1,76 @@
 ﻿@model AskAway.Models.Category
 
-@{
-    ViewBag.Titlu = "Afisare categorie";
+
+<h2 class="CategoryTitle">@Model.CategoryName</h2>
+
+@using (Html.BeginForm("Show", "Category", FormMethod.Get))
+{
+    <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        @*<input type="text" class="form-control" value=@ViewBag.search name="search" placeholder="Search">*@
+        @Html.TextBox("search", ViewBag.FilterValue as string)
+        @*<a class="btn btn-sm btn-outline-secondary" href="/Category/Show/@Model.CategoryId?page=@ViewBag.page">Search</a>*@
+        <input type="submit" value="Find" />
+    </div>
 }
 
-<h2>@ViewBag.Titlu</h2>
+@foreach (AskAway.Models.Topic topic in Model.Topics)
+{
+    if (topic.CategoryId == Model.CategoryId)
+    {
+        <div>
+            <a class="TopicShow btn" href="/Topic/Show/@topic.Id">
+                @topic.Title
+                <i class="right"></i>
+            </a>
+        </div>
 
-<p>@Model.CategoryName</p>
+    }
+}
 
 @if (this.User.IsInRole("Administrator"))
 {
     <form method="post" action="/Category/Delete/@Model.CategoryId">
-    @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button class="btn btn-danger" type="submit">Sterge categoria</button>
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-danger" type="submit">Sterge categoria</button>
     </form>
-}
-    <br />
-    <a class="btn btn-success" href="/Category/Index/">Inapoi la lista de categorii</a>
 
-    <br />
-    <hr />
-    <br />
+
+}
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                @if (Convert.ToInt32(ViewBag.page) > 1)
+                {
+                    <a href="/Category/Show/@Model.CategoryId?page=@(Convert.ToInt32(ViewBag.page) - 1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                }
+
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li><a href="/Category/Show/@Model.CategoryId?page=@i">@(i)</a></li>
+            }
+            <li>
+                @if (Convert.ToInt32(ViewBag.page) < Convert.ToInt32(ViewBag.lastPage) && Convert.ToInt32(ViewBag.page) != 0)
+                {
+                    <a href="/Category/Show/@Model.CategoryId?page=@(Convert.ToInt32(ViewBag.page) + 1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                }
+
+            </li>
+        </ul>
+    </nav>
+</div>
+<br />
+
+<a class="btn btn-success" href="/Topic/New/">Adauga subiect</a>
+<a class="btn btn-success" href="/Category/Index/">Inapoi la lista de categorii</a>
+
+<br />
+<hr />
+<br />
 
